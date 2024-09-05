@@ -1,0 +1,25 @@
+server:
+  port: 8186
+
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2MB
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+
+
+logging:
+  level:
+    root: INFO
+    com.example.pdfservice: DEBUG
+
+  file:
+    name: application.log
+    path: logs
+
+spring-doc:
+  swagger-ui:
+  path: /swagger-ui.html

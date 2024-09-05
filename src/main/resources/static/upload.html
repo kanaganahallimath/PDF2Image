@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PDF to Image Converter</title>
+    <style>
+        body {
+            padding: 0;
+            background: lighten(#3a4043, 15%);
+            font-family: 'poppins';
+            background-color: #262239; /* Light grey background color */
+            color: #343a40; /* Dark grey text color */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+
+        /* Navigation bar styling */
+        .navbar {
+            background-color: #9fd3c7;
+            color: white;
+            padding: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            font-size: 1.2em;
+        }
+        .navbar a:hover {
+            background-color: #385170;
+            border-radius: 4px;
+        }
+        .container {
+            background: #262239;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 100%;
+            max-width: 100%;
+            text-align: center;
+        }
+        h1 {
+            color: #007BFF; /* Bright blue color for the header */
+            margin-bottom: 20px;
+            font-size: 2em; /* Increase font size for the header */
+        }
+        form {
+            margin-bottom: 20px;
+        }
+          label {
+            display: inline-block;
+            padding: 14px 20px;
+            background-color: #f1dd27; /* Blue background for the button look */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1.2em; /* Larger font size for the button */
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-align: center;
+            margin-bottom: 20px; /* Space between the button and file input */
+        }
+        label:hover {
+            background-color: #0056b3;
+        }
+         .file-upload {
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 400px;
+            text-align: left;
+            margin: 0 auto; /* Center the file upload container */
+        }
+        .file-upload input[type="file"] {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+        .file-upload button {
+            display: inline-block;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 14px 20px;
+            font-size: 1.2em; /* Larger font size for the button */
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-align: left;
+            white-space: nowrap;
+            overflow: hidden;
+            margin-right: 10px; /* Space between button and file input */
+        }
+        .file-upload button:hover {
+            background-color: #0056b3;
+        }
+        button.submit-button {
+            background-color: #28a745; /* Green color for the submit button */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 14px 20px;
+            font-size: 1.2em; /* Larger font size for the submit button */
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-align: left;
+        }
+        button.submit-button:hover {
+            background-color: #218838;
+        }
+        #result {
+            margin-top: 20px;
+        }
+        img {
+            max-width: 100%;
+            height: 200px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+        .download-btn {
+            display: inline-block;
+            padding: 14px 20px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #28a745;
+            color: white;
+            font-size: 1.2em; /* Larger font size for the download button */
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        .download-btn:hover {
+            background-color: #218838;
+        }
+        .error-message {
+            color: #dc3545; /* Red color for error messages */
+            font-size: 1.1em; /* Larger font size for error messages */
+            margin-top: 10px;
+        }
+        .wrapper{
+            position:absolute;
+            top:50%;
+            left:50%;
+            transform: translate(-50%, -50%);
+            width:100%;
+        }
+        .wrapper h2{
+            margin:0;
+            line-height:1;
+            font-size: 10em;
+            color:transparent;
+            text-transform: uppercase;
+            background-image: linear-gradient(to left, #2ecc71, #3498db, #9b59b6, #f39c12);
+            -webkit-background-clip: text;
+             animation: animate 5s linear infinite;
+             -webkit-background-size: 500%;
+             background-size: 500%;
+             text-align:center;
+        }
+        @keyframes animate{
+            0%{
+                background-position:0 100%;
+            }
+            50%{
+                background-position:100% 0;
+            }
+            100%{
+                background-position:0 100%;
+            }
+    }
+     .wrapper h1{
+            margin:0;
+            line-height:1;
+            font-size: 5em;
+            color:transparent;
+            text-transform: uppercase;
+            background-image: linear-gradient(to left, #2ecc71, #3498db, #9b59b6, #f39c12);
+            -webkit-background-clip: text;
+            animation: animate 5s linear infinite;
+            -webkit-background-size: 500%;
+            background-size: 500%;
+            text-align:center;
+    }
+    </style>
+</head>
+<body>
+<header class="navbar">
+    <a href="/">Home</a>
+    <a href="/about">About</a>
+    <a href="/contact">Contact</a>
+</header>
+<div class="wrapper">
+<h1>PDF to Image</h1>
+<div class="container">
+
+    <form id="uploadForm" action="/api/pdf/convert" method="post" enctype="multipart/form-data">
+        <label for="file" >Upload</label>
+
+        <div class="file-upload">
+
+            <input type="file" id="file" name="file" accept=".pdf" required>
+        </div>
+        <button type="submit" class="submit-button">Convert to Image</button>
+    </form>
+    <div id="result">
+        <!-- Resulting download button and image will be displayed here -->
+    </div>
+</div>
+</div>
+<script>
+        document.getElementById('uploadForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            var formData = new FormData(this);
+
+            fetch('/api/pdf/convert', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok.');
+                }
+                return response.blob();
+            })
+            .then(blob => {
+                // Create a URL for the image blob
+                var imgURL = URL.createObjectURL(blob);
+
+                // Create a button element to download the image
+                var downloadBtn = document.createElement('a');
+                downloadBtn.href = imgURL;
+                downloadBtn.download = 'pdf_first_page.png'; // Name of the file to download
+                downloadBtn.innerText = 'Download Image';
+                downloadBtn.className = 'download-btn'; // Apply CSS class
+
+                // Create an img element to display the image
+                var img = document.createElement('img');
+                img.src = imgURL;
+                img.alt = 'Generated Image';
+
+                // Clear the previous content and append the new elements
+                var resultDiv = document.getElementById('result');
+                resultDiv.innerHTML = ''; // Clear previous results
+                resultDiv.appendChild(downloadBtn); // Add the download button
+                resultDiv.appendChild(document.createElement('br')); // Add a line break
+                resultDiv.appendChild(img); // Add the image
+
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+                var resultDiv = document.getElementById('result');
+                resultDiv.innerHTML = '<p class="error-message">Failed to generate image. Please try again.</p>';
+            });
+        });
+
+        // JavaScript to display selected file name in the custom button
+        document.querySelector('.file-upload input[type="file"]').addEventListener('change', function(event) {
+            var fileName = event.target.files.length > 0 ? event.target.files[0].name : 'Choose File';
+            document.querySelector('.file-upload button').textContent = fileName;
+        });
+    </script>
+</body>
+</html>

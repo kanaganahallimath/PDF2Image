@@ -1,0 +1,68 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.3.3'
+	id 'io.spring.dependency-management' version '1.1.6'
+}
+
+group = 'com.kanaganahallimath.pdfImage'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(20)
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+
+
+// https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui
+	implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.6.0'
+
+	implementation 'org.apache.pdfbox:pdfbox:2.0.28' // Use the latest stable version
+
+	/*// PDFBox
+	// https://mvnrepository.com/artifact/org.apache.pdfbox/pdfbox
+	implementation ('org.apache.pdfbox:pdfbox:3.0.3'){
+		exclude group: 'commons-logging', module: 'commons-logging'
+	}*/
+
+	implementation ('org.apache.pdfbox:pdfbox-tools:3.0.0'){
+		exclude group: 'commons-logging', module: 'commons-logging'
+	} // Check for the latest version
+
+	implementation ('org.apache.pdfbox:fontbox:2.0.32') {
+		exclude group: 'commons-logging', module: 'commons-logging'
+	}
+	// https://mvnrepository.com/artifact/org.apache.pdfbox/jbig2-imageio
+	implementation group: 'org.apache.pdfbox', name: 'jbig2-imageio', version: '3.0.4'
+
+	// https://mvnrepository.com/artifact/org.apache.pdfbox/jempbox
+	implementation group: 'org.apache.pdfbox', name: 'jempbox', version: '1.8.17'
+
+	// https://mvnrepository.com/artifact/org.apache.pdfbox/pdfbox-tools
+	implementation group: 'org.apache.pdfbox', name: 'pdfbox-tools', version: '3.0.3'
+
+	// https://mvnrepository.com/artifact/com.github.jai-imageio/jai-imageio-core
+	implementation group: 'com.github.jai-imageio', name: 'jai-imageio-core', version: '1.4.0'
+
+	// https://mvnrepository.com/artifact/com.github.jai-imageio/jai-imageio-jpeg2000
+	implementation group: 'com.github.jai-imageio', name: 'jai-imageio-jpeg2000', version: '1.4.0'
+
+
+
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
